@@ -46,8 +46,8 @@ fi
 ##########################################################################
 
 if [[ ! -d ${dir_name} ]] ; then
-    gitlab_root="git+ssh://git@gitlab.com:${hg_url_root}"
-    ${hg}   clone  ${hg_opts}  ${gitlab_root}/${repo_name}.git  ${dir_name}
+    _gitlab_root="git+ssh://git@${gitlab_hostname}:${hg_url_root}"
+    ${hg}   clone  ${hg_opts}  ${_gitlab_root}/${repo_name}.git  ${dir_name}
     ${git}  init   ${dir_name}
 fi
 
