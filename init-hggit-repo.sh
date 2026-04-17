@@ -42,7 +42,7 @@ if [[ ! -d ${dir_name} ]] ; then
     ${git}  init   ${dir_name}
 fi
 
-cat  ${script_dir}/hgrc  |  sed   \
+cat  "${_script_dir}/hgrc"  |  sed  \
     -e  "s/@REPOSITORY_NAME@/${repo_name}/g"    \
     -e  "s/@URL_ROOT@/${hg_url_root}/g"         \
     -e  "s/@DIRECTORY_NAME@/${dir_name}/g"      \

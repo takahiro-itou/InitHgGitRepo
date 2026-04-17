@@ -1,0 +1,12 @@
+
+# リモートリポジトリ
+[paths]
+GitLab      =  git+ssh://git@gitlab.com:@URL_ROOT@/@REPOSITORY_NAME@.git
+bitBucket   =  git+ssh://git@bitbucket.org:@URL_ROOT@/@REPOSITORY_NAME@.git
+
+# ユーザー
+[ui]
+username    =
+
+# エクステンション
+[extensions]
