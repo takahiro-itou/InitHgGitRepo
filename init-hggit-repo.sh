@@ -19,14 +19,20 @@ git=${GIT:-"${git_bin_default}"}
 user_email=${USER_EMAIL:-"${user_email_default}"}
 user_name=${USER_NAME:-"${user_name_default}"}
 
+gitlab_hostname="gitlab.com${url_host_postname}"
+bucket_hostname="bucket.org${url_host_postname}"
+
+
+##########################################################################
+
 repo_name=$1
 
 if [[ $# -ge 2 ]] ; then
     proj_name=$2
-    url_prefix="takahiro-itou-${proj_name}"
+    url_prefix="${url_account_name}-${proj_name}"
 else
     proj_name=''
-    url_prefix='takahiro-itou'
+    url_prefix="${url_account_name}"
 fi
 hg_url_root="${url_prefix}-hggit"
 
