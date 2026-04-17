@@ -42,6 +42,9 @@ else
     dir_name=${repo_name}
 fi
 
+
+##########################################################################
+
 if [[ ! -d ${dir_name} ]] ; then
     gitlab_root="git+ssh://git@gitlab.com:${hg_url_root}"
     ${hg}   clone  ${hg_opts}  ${gitlab_root}/${repo_name}.git  ${dir_name}
@@ -54,9 +57,12 @@ cat  "${_script_dir}/hgrc"  |  sed  \
     -e  "s/@DIRECTORY_NAME@/${dir_name}/g"      \
   >  ${dir_name}/.hg/hgrc
 
+_gitlab_root="git@${gitlab_hostname}:${url_prefix}"
+_bucket_root="git@${bucket_hostname}:${url_prefix}"
+
 pushd
 git config --local user.email "${user_email}"
 git config --local user.name  "${user_name}"
-git remote add origin "git@gitlab.com:${url_prefix}/${repo_name}.git"
-git remote add bit    "git@bucket.org:${url_prefix}/${repo_name}.git"
+git remote add origin "${_gitlab_root}/${repo_name}.git"
+git remote add bit    "${_bucket_root}/${repo_name}.git"
 popd
