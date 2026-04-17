@@ -1,7 +1,6 @@
 #!/bin/bash
 
-default_hg_bin=
-default_git_bin=
-user_email=
-user_name=
-url_prefix=
+git_bin_default=
+hg_bin_default=
+user_email_default=
+user_name_default=
