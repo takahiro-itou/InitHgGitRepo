@@ -1,0 +1,9 @@
+#!/bin/bash
+
+git_bin_default=
+hg_bin_default=
+
+url_host_postname=
+url_account_name=
+user_email_default=
+user_name_default=
