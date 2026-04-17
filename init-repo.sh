@@ -34,7 +34,7 @@ else
     proj_name=''
     url_prefix="${url_account_name}"
 fi
-hg_url_root="${url_prefix}-hggit"
+hg_url_root="${url_prefix}"
 
 if [[ $# -ge 3 ]] ; then
     dir_name=$3
