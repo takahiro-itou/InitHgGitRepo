@@ -2,13 +2,21 @@
 
 set  -ue
 
-_current_script_file=$0
-_script_dir=$(dirname  "${_current_script_file}")
+##########################################################################
+##
+##    メイン
+##
 
-if [[ $# -lt 1 ]] ; then
-    echo  "Usage: $0 (RepositoryName) [ProjName] [DirName]"  1>&2
-    exit  1
-fi
+function  initrepo::main () {
+
+
+##
+##    変数定義
+##
+
+local  _script_file=$0
+local  _script_real_file=$(readlink -f "${_script_file}")
+local  _script_dir=$(dirname "${_script_real_file}")
 
 source  "${_script_dir}/config"
 
@@ -23,7 +31,9 @@ gitlab_hostname="gitlab.com${url_host_postname}"
 bucket_hostname="bucket.org${url_host_postname}"
 
 
-##########################################################################
+##
+##    引数解析
+##
 
 repo_name=$1
 
@@ -43,7 +53,9 @@ else
 fi
 
 
-##########################################################################
+##
+##    クローンしてリポジトリの設定を行う
+##
 
 if [[ ! -d ${dir_name} ]] ; then
     _gitlab_root="git+ssh://git@${gitlab_hostname}:${hg_url_root}"
@@ -66,3 +78,13 @@ git config --local user.name  "${user_name}"
 git remote add origin "${_gitlab_root}/${repo_name}.git"
 git remote add bit    "${_bucket_root}/${repo_name}.git"
 popd   1>&2
+
+}
+
+
+if [[ $# -lt 1 ]] ; then
+    echo  "Usage: $0 (RepositoryName) [ProjName] [DirName]"  1>&2
+    exit  1
+fi
+
+initrepo::main  "$@"
