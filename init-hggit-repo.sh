@@ -57,10 +57,12 @@ fi
 ##    クローンしてリポジトリの設定を行う
 ##
 
+local  _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_hg_url_root}"
+local  _hg_clone_url="${_gitlab_root}/${repo_name}.git"
+
 if [[ ! -d ${dir_name} ]] ; then
-    _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_hg_url_root}"
-    ${_hg}   clone  ${_hg_opts}  ${_gitlab_root}/${repo_name}.git  ${dir_name}
-    ${_git}  init   ${dir_name}
+    "${_hg}"   clone  ${_hg_opts}  "${_hg_clone_url}"  "${dir_name}"
+    "${_git}"  init   "${dir_name}"
 fi
 
 cat  "${_script_dir}/hgrc"  |  sed  \
@@ -73,10 +75,10 @@ _gitlab_root="git@${_gitlab_hostname}:${url_prefix}"
 _bucket_root="git@${_bucket_hostname}:${url_prefix}"
 
 pushd  "${dir_name}"    1>&2
-git config --local user.email "${user_email}"
-git config --local user.name  "${user_name}"
-git remote add origin "${_gitlab_root}/${_repo_name}.git"
-git remote add bit    "${_bucket_root}/${_repo_name}.git"
+git config --local user.email "${_user_email}"
+git config --local user.name  "${_user_name}"
+git remote add origin "${_gitlab_root}/${repo_name}.git"
+git remote add bit    "${_bucket_root}/${repo_name}.git"
 popd   1>&2
 
 }

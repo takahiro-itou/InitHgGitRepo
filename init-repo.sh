@@ -57,10 +57,12 @@ fi
 ##    クローンしてリポジトリの設定を行う
 ##
 
+local  _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_hg_url_root}"
+local  _hg_clone_url="${_gitlab_root}/${repo_name}.git"
+
 if [[ ! -d ${dir_name} ]] ; then
-    _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_hg_url_root}"
-    ${_hg}   clone  ${_hg_opts}  ${_gitlab_root}/${repo_name}.git  ${dir_name}
-    ${_git}  init   ${dir_name}
+    "${_hg}"   clone  ${_hg_opts}  "${_hg_clone_url}"  "${dir_name}"
+    "${_git}"  init   "${dir_name}"
 fi
 
 cat  "${_script_dir}/hgrc"  |  sed  \
