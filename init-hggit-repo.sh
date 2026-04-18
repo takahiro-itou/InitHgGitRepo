@@ -63,7 +63,7 @@ fi
 local  _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_hg_url_root}"
 local  _hg_clone_url="${_gitlab_root}/${_repo_name}.git"
 
-if [[ ! -d ${_dir_name} ]] ; then
+if [[ ! -d "${_dir_name}" ]] ; then
     "${_hg}"   clone  ${_hg_opts}  "${_hg_clone_url}"  "${_dir_name}"
     "${_git}"  init   "${_dir_name}"
 fi
@@ -78,10 +78,10 @@ _gitlab_root="git@${_gitlab_hostname}:${_url_prefix}"
 _bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 
 pushd  "${_dir_name}"   1>&2
-git config --local user.email "${_user_email}"
-git config --local user.name  "${_user_name}"
-git remote add origin "${_gitlab_root}/${_repo_name}.git"
-git remote add bit    "${_bucket_root}/${_repo_name}.git"
+"${_git}"  config --local  user.email "${_user_email}"
+"${_git}"  config --local  user.name  "${_user_name}"
+"${_git}"  remote add  origin "${_gitlab_root}/${_repo_name}.git"
+"${_git}"  remote add  bit    "${_bucket_root}/${_repo_name}.git"
 popd   1>&2
 
 }
