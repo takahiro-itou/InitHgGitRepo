@@ -20,15 +20,15 @@ local  _script_dir=$(dirname "${_script_real_file}")
 
 source  "${_script_dir}/config"
 
-_hg=${HG:-"${hg_bin_default}"}
-_hg_opts=${HG_OPTS:-'--verbose'}
-_git=${GIT:-"${git_bin_default}"}
+local  _hg=${HG:-"${hg_bin_default}"}
+local  _hg_opts=${HG_OPTS:-'--verbose'}
+local  _git=${GIT:-"${git_bin_default}"}
 
-_user_email=${USER_EMAIL:-"${user_email_default}"}
-_user_name=${USER_NAME:-"${user_name_default}"}
+local  _user_email=${USER_EMAIL:-"${user_email_default}"}
+local  _user_name=${USER_NAME:-"${user_name_default}"}
 
-_gitlab_hostname="gitlab.com${url_host_postname}"
-_bucket_hostname="bucket.org${url_host_postname}"
+local  _gitlab_hostname="gitlab.com${url_host_postname}"
+local  _bucket_hostname="bucket.org${url_host_postname}"
 
 
 ##
