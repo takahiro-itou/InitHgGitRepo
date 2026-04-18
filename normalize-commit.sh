@@ -66,7 +66,8 @@ _bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 "${_git}"  config --local  'user.name'   "${_user_name}"
 
 # 実行前に origin 以外のリモートを解除
-"${_git}"  remote  remove  bit
+"${_git}"  remote  remove  github  || :
+"${_git}"  remote  remove  bit     || :
 
 "${_git}"  filter-repo  --email-callback "  return b'${_user_email}'"  "$@"
 "${_git}"  filter-repo  --name-callback  "  return b'${_user_name}'"   "$@"
