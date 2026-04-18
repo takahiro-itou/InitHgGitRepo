@@ -2,8 +2,22 @@
 
 set  -ue
 
-_current_script_file=$0
-_script_dir=$(dirname  "${_current_script_file}")
+
+##########################################################################
+##
+##    メイン
+##
+
+function  chgcmt::main () {
+
+
+##
+##    変数定義
+##
+
+local  _script_file=$0
+local  _script_real_file=$(readlink -f "${_script_file}")
+local  _script_dir=$(dirname "${_script_real_file}")
 
 source  "${_script_dir}/config"
 
@@ -21,3 +35,8 @@ git config --local  'user.name'   "${user_name}"
 
 git filter-repo --email-callback "  return b'${user_email}'"
 git filter-repo --name-callback  "  return b'${user_name}'"
+
+}
+
+
+chgcmt::main  "$@"
