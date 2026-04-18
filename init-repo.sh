@@ -35,21 +35,24 @@ _bucket_hostname="bucket.org${url_host_postname}"
 ##    引数解析
 ##
 
-repo_name=$1
+local  _repo_name=$1
+local  _proj_name
+local  _dir_name
+local  _url_prefix
 
 if [[ $# -ge 2 ]] ; then
-    proj_name=$2
-    url_prefix="${url_account_name}-${proj_name}"
+    _proj_name=$2
+    _url_prefix="${url_account_name}-${_proj_name}"
 else
-    proj_name=''
-    url_prefix="${url_account_name}"
+    _proj_name=''
+    _url_prefix="${url_account_name}"
 fi
-_hg_url_root="${url_prefix}"
+local  _hg_url_root="${_url_prefix}"
 
 if [[ $# -ge 3 ]] ; then
-    dir_name=$3
+    _dir_name=$3
 else
-    dir_name=${repo_name}
+    _dir_name="${_repo_name}"
 fi
 
 
@@ -58,27 +61,27 @@ fi
 ##
 
 local  _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_hg_url_root}"
-local  _hg_clone_url="${_gitlab_root}/${repo_name}.git"
+local  _hg_clone_url="${_gitlab_root}/${_repo_name}.git"
 
-if [[ ! -d ${dir_name} ]] ; then
-    "${_hg}"   clone  ${_hg_opts}  "${_hg_clone_url}"  "${dir_name}"
-    "${_git}"  init   "${dir_name}"
+if [[ ! -d ${_dir_name} ]] ; then
+    "${_hg}"   clone  ${_hg_opts}  "${_hg_clone_url}"  "${_dir_name}"
+    "${_git}"  init   "${_dir_name}"
 fi
 
 cat  "${_script_dir}/hgrc"  |  sed  \
-    -e  "s/@REPOSITORY_NAME@/${repo_name}/g"    \
+    -e  "s/@REPOSITORY_NAME@/${_repo_name}/g"   \
     -e  "s/@URL_ROOT@/${_hg_url_root}/g"        \
-    -e  "s/@DIRECTORY_NAME@/${dir_name}/g"      \
-  >  ${dir_name}/.hg/hgrc
+    -e  "s/@DIRECTORY_NAME@/${_dir_name}/g"     \
+  >  ${_dir_name}/.hg/hgrc
 
-_gitlab_root="git@${_gitlab_hostname}:${url_prefix}"
-_bucket_root="git@${_bucket_hostname}:${url_prefix}"
+_gitlab_root="git@${_gitlab_hostname}:${_url_prefix}"
+_bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 
-pushd  "${dir_name}"    1>&2
+pushd  "${_dir_name}"   1>&2
 git config --local user.email "${_user_email}"
 git config --local user.name  "${_user_name}"
-git remote add origin "${_gitlab_root}/${repo_name}.git"
-git remote add bit    "${_bucket_root}/${repo_name}.git"
+git remote add origin "${_gitlab_root}/${_repo_name}.git"
+git remote add bit    "${_bucket_root}/${_repo_name}.git"
 popd   1>&2
 
 }
