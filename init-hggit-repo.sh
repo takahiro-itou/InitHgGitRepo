@@ -60,9 +60,9 @@ cat  "${_script_dir}/hgrc"  |  sed  \
 _gitlab_root="git@${gitlab_hostname}:${url_prefix}"
 _bucket_root="git@${bucket_hostname}:${url_prefix}"
 
-pushd
+pushd  "${dir_name}"    1>&2
 git config --local user.email "${user_email}"
 git config --local user.name  "${user_name}"
 git remote add origin "${_gitlab_root}/${repo_name}.git"
 git remote add bit    "${_bucket_root}/${repo_name}.git"
-popd
+popd   1>&2
