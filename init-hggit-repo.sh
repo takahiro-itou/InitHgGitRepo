@@ -24,8 +24,8 @@ _hg=${HG:-"${hg_bin_default}"}
 _hg_opts=${HG_OPTS:-'--verbose'}
 _git=${GIT:-"${git_bin_default}"}
 
-user_email=${USER_EMAIL:-"${user_email_default}"}
-user_name=${USER_NAME:-"${user_name_default}"}
+_user_email=${USER_EMAIL:-"${user_email_default}"}
+_user_name=${USER_NAME:-"${user_name_default}"}
 
 _gitlab_hostname="gitlab.com${url_host_postname}"
 _bucket_hostname="bucket.org${url_host_postname}"
@@ -75,8 +75,8 @@ _bucket_root="git@${_bucket_hostname}:${url_prefix}"
 pushd  "${dir_name}"    1>&2
 git config --local user.email "${user_email}"
 git config --local user.name  "${user_name}"
-git remote add origin "${_gitlab_root}/${repo_name}.git"
-git remote add bit    "${_bucket_root}/${repo_name}.git"
+git remote add origin "${_gitlab_root}/${_repo_name}.git"
+git remote add bit    "${_bucket_root}/${_repo_name}.git"
 popd   1>&2
 
 }
