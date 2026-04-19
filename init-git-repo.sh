@@ -20,7 +20,7 @@ local  _script_dir=$(dirname "${_script_real_file}")
 
 source  "${_script_dir}/config"
 
-local  _git_opts=${GIT_OPTS:-'--verbose'}
+local  _git_opts=${GIT_OPTS:-'--verbose --progress'}
 local  _git=${GIT:-"${git_bin_default}"}
 
 local  _user_email=${USER_EMAIL:-"${user_email_default}"}
