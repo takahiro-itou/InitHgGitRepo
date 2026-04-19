@@ -76,8 +76,8 @@ _bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 # 解除されるリモートを再設定
 
 if [[ "X${_repo_name}Y" != 'XY' ]] ; then
-    "${_git}"  remote add  origin "${_gitlab_root}/${_repo_name}.git"
-    "${_git}"  remote add  bit    "${_bucket_root}/${_repo_name}.git"
+    "${_git}"  remote add  origin "${_gitlab_root}/${_repo_name}.git"  || :
+    "${_git}"  remote add  bit    "${_bucket_root}/${_repo_name}.git"  || :
 fi
 
 }
