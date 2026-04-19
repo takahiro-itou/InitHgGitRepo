@@ -20,11 +20,12 @@ local  _script_dir=$(dirname "${_script_real_file}")
 
 source  "${_script_dir}/config"
 
-local  _git_opts=${GIT_OPTS:-'--verbose'}
+local  _git_opts=${GIT_OPTS:-'--verbose --progress'}
 local  _git=${GIT:-"${git_bin_default}"}
 
 local  _user_email=${USER_EMAIL:-"${user_email_default}"}
 local  _user_name=${USER_NAME:-"${user_name_default}"}
+local  _user_gpg2key=${USER_GPG2KEY:-"${user_gpg2key_default}"}
 
 local  _gitlab_hostname="gitlab.com${url_host_postname}"
 local  _bucket_hostname="bucket.org${url_host_postname}"
@@ -59,19 +60,24 @@ fi
 ##    クローンしてリポジトリの設定を行う
 ##
 
-local  _gitlab_root="git+ssh://git@${_gitlab_hostname}:${_git_url_root}"
-local  _git_clone_url="${_gitlab_root}/${_repo_name}.git"
+local  _gitlab_root
+local  _bucket_root
+local  _git_clone_url
+
+_gitlab_root="git@${_gitlab_hostname}:${_url_prefix}"
+_git_clone_url="${_gitlab_root}/${_repo_name}.git"
+_bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 
 if [[ ! -d "${_dir_name}" ]] ; then
     "${_git}"  clone  ${_git_opts}  "${_git_clone_url}"  "${_dir_name}"
 fi
 
-_gitlab_root="git@${_gitlab_hostname}:${_url_prefix}"
-_bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 
 pushd  "${_dir_name}"   1>&2
 "${_git}"  config --local  user.email "${_user_email}"
 "${_git}"  config --local  user.name  "${_user_name}"
+"${_git}"  config --local  user.signingkey "${_user_gpg2key}"
+
 "${_git}"  remote add  bit    "${_bucket_root}/${_repo_name}.git"
 popd   1>&2
 

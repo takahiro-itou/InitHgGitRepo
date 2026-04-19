@@ -40,12 +40,14 @@ local  _url_prefix
 
 if [[ $# -ge 1 ]] ; then
     _repo_name=$1
+    shift  1
 else
     _repo_name=''
 fi
 
-if [[ $# -ge 2 ]] ; then
-    _proj_name=$2
+if [[ $# -ge 1 ]] ; then
+    _proj_name=$1
+    shift  1
     _url_prefix="${url_account_name}-${_proj_name}"
 else
     _proj_name=''
@@ -63,8 +65,12 @@ _bucket_root="git@${_bucket_hostname}:${_url_prefix}"
 "${_git}"  config --local  'user.email'  "${_user_email}"
 "${_git}"  config --local  'user.name'   "${_user_name}"
 
-"${_git}"  filter-repo  --email-callback "  return b'${_user_email}'"
-"${_git}"  filter-repo  --name-callback  "  return b'${_user_name}'"
+# 実行前に origin 以外のリモートを解除
+"${_git}"  remote  remove  github  || :
+"${_git}"  remote  remove  bit     || :
+
+"${_git}"  filter-repo  --email-callback "  return b'${_user_email}'"  "$@"
+"${_git}"  filter-repo  --name-callback  "  return b'${_user_name}'"   "$@"
 
 
 # 解除されるリモートを再設定
