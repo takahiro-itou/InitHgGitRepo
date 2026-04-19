@@ -25,6 +25,7 @@ local  _git=${GIT:-"${git_bin_default}"}
 
 local  _user_email=${USER_EMAIL:-"${user_email_default}"}
 local  _user_name=${USER_NAME:-"${user_name_default}"}
+local  _user_gpg2key=${USER_GPG2KEY:-"${user_gpg2key_default}"}
 
 local  _gitlab_hostname="gitlab.com${url_host_postname}"
 local  _bucket_hostname="bucket.org${url_host_postname}"
@@ -75,6 +76,8 @@ fi
 pushd  "${_dir_name}"   1>&2
 "${_git}"  config --local  user.email "${_user_email}"
 "${_git}"  config --local  user.name  "${_user_name}"
+"${_git}"  config --local  user.signingkey "${_user_gpg2key}"
+
 "${_git}"  remote add  bit    "${_bucket_root}/${_repo_name}.git"
 popd   1>&2
 
